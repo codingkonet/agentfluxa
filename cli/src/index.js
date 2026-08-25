@@ -4,7 +4,6 @@ import { stdin, stdout, argv, env } from 'node:process';
 
 const VALID_PROVIDERS = ['openai', 'gemini', 'openrouter', 'copilot'];
 
-// Placeholder production host until the backend is actually deployed there.
 const DEFAULT_URL = 'https://agentfluxa.com/api';
 
 function parseArgs(args) {

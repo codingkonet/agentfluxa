@@ -39,9 +39,8 @@ dev server or a deployed instance.
 npm run chat -- --url http://localhost:5174/api --provider openai
 ```
 
-By default it points at `https://agentfluxa.com/api` (a placeholder until the backend is deployed
-there) or `$AGENTFLUXA_API_URL` if set. While developing locally, always pass
-`--url http://localhost:5174/api`.
+By default it points at `https://agentfluxa.com/api` (the live deployment) or `$AGENTFLUXA_API_URL`
+if set. While developing locally, pass `--url http://localhost:5174/api` instead.
 
 In-chat commands: `/provider <name>`, `/clear`, `/help`, `/exit`.
 
@@ -54,7 +53,7 @@ Embeds the AgentFLUXA web app in a VS Code webview panel.
 1. Open this repo in VS Code and press **F5** (uses `.vscode/launch.json`) to launch an Extension
    Development Host.
 2. In the new window, set `agentfluxa.url` in Settings to `http://localhost:5173` while `npm run dev`
-   is running locally (defaults to `https://agentfluxa.com`, a placeholder until deployed).
+   is running locally (defaults to `https://agentfluxa.com`, the live deployment).
 3. Run the command **AgentFLUXA: Open** from the Command Palette (`Ctrl+Shift+P`).
 
 ## Providers
