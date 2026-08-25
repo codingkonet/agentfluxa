@@ -19,9 +19,10 @@ body {
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid #262a33;
 }
 
@@ -31,6 +32,7 @@ body {
 
 .model-input {
   width: 160px;
+  max-width: 100%;
   padding: 0.4rem 0.6rem;
   border-radius: 6px;
   border: 1px solid #333;
@@ -41,6 +43,7 @@ body {
 
 .tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.4rem;
 }
 
@@ -159,6 +162,7 @@ body {
 
 .coder-toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
@@ -283,6 +287,7 @@ body {
 
 .provider-card-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.6rem;
 }
@@ -402,5 +407,97 @@ body {
   color: #a0a4ad;
   font-size: 0.85rem;
   line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .app {
+    min-height: 100dvh;
+    height: 100dvh;
+  }
+
+  .header {
+    align-items: stretch;
+    padding: 0.75rem;
+  }
+
+  .header h1 {
+    flex: 1 0 100%;
+  }
+
+  .tabs {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.1rem;
+  }
+
+  .tabs button {
+    flex: 1 0 auto;
+    white-space: nowrap;
+  }
+
+  .header select,
+  .header .model-input {
+    flex: 1 1 0;
+    width: 0;
+    min-width: 0;
+    margin-left: 0;
+  }
+
+  .chat {
+    padding: 0.75rem;
+  }
+
+  .bubble {
+    max-width: 94%;
+    padding: 0.55rem 0.7rem;
+  }
+
+  .composer {
+    padding: 0.75rem;
+  }
+
+  .composer button {
+    padding-inline: 0.85rem;
+  }
+
+  .landing {
+    padding: 1.75rem 0.75rem;
+    gap: 1.5rem;
+  }
+
+  .hero h2 {
+    font-size: 1.65rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .cta {
+    width: 100%;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard {
+    padding: 0.75rem;
+  }
+
+  .provider-card {
+    padding: 0.85rem;
+  }
+
+  .coder-toolbar {
+    align-items: stretch;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .coder-toolbar select,
+  .coder-toolbar .model-input {
+    width: 100%;
+  }
 }
 
