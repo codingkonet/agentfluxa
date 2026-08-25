@@ -1,0 +1,30 @@
+{
+  "name": "agentfluxa-vscode",
+  "displayName": "AgentFLUXA",
+  "description": "Open the AgentFLUXA chat UI inside VS Code",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "agentfluxa.open",
+        "title": "AgentFLUXA: Open"
+      }
+    ],
+    "configuration": {
+      "title": "AgentFLUXA",
+      "properties": {
+        "agentfluxa.url": {
+          "type": "string",
+          "default": "https://agentfluxa.com",
+          "description": "URL of the AgentFLUXA web app to embed. Set to http://localhost:5173 while developing locally."
+        }
+      }
+    }
+  }
+}
