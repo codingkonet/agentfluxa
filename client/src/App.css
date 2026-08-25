@@ -118,6 +118,125 @@ body {
   margin: 0 auto;
 }
 
+.theme-light {
+  background: #f4f6f8;
+  color: #18202a;
+}
+
+.theme-light .header,
+.theme-light .footer,
+.theme-light .composer,
+.theme-light .coder-toolbar {
+  border-color: #d8dee7;
+}
+
+.theme-light .header select,
+.theme-light .theme-select,
+.theme-light .model-input,
+.theme-light .composer input,
+.theme-light .field input,
+.theme-light .coder-toolbar select,
+.theme-light .coder-toolbar .model-input,
+.theme-light .auth-form input {
+  background: #ffffff;
+  border-color: #c8d0db;
+  color: #18202a;
+}
+
+.theme-light .tabs button,
+.theme-light .tool-list-item,
+.theme-light .provider-card,
+.theme-light .feature-card,
+.theme-light .auth-panel,
+.theme-light .dashboard-note,
+.theme-light .budget-panel {
+  background: #ffffff;
+  border-color: #d8dee7;
+  color: #18202a;
+}
+
+.theme-light .tabs button,
+.theme-light .muted,
+.theme-light .hero p,
+.theme-light .feature-card p,
+.theme-light .tools-intro p:last-child,
+.theme-light .field,
+.theme-light .dashboard-note,
+.theme-light .auth-copy,
+.theme-light .auth-form label {
+  color: #536171;
+}
+
+.theme-light .tabs button.active,
+.theme-light .tool-list-item.active,
+.theme-light .budget-summary div,
+.theme-light .code-block-header {
+  background: #eef1f5;
+  color: #18202a;
+}
+
+.theme-light .bubble {
+  background: #ffffff;
+  border: 1px solid #d8dee7;
+}
+
+.theme-light .bubble.user {
+  background: #e1e8ff;
+}
+
+.theme-light .code-block {
+  background: #f7f8fa;
+  border-color: #c8d0db;
+}
+
+.theme-light .code-block pre {
+  color: #18202a;
+}
+
+.theme-aurora {
+  background: #101c1b;
+  color: #e6fff6;
+}
+
+.theme-aurora .header,
+.theme-aurora .footer,
+.theme-aurora .composer,
+.theme-aurora .coder-toolbar {
+  border-color: #234440;
+}
+
+.theme-aurora .header select,
+.theme-aurora .theme-select,
+.theme-aurora .model-input,
+.theme-aurora .composer input,
+.theme-aurora .field input,
+.theme-aurora .coder-toolbar select,
+.theme-aurora .coder-toolbar .model-input,
+.theme-aurora .auth-form input {
+  background: #172a28;
+  border-color: #2d5a51;
+  color: #e6fff6;
+}
+
+.theme-aurora .tabs button,
+.theme-aurora .tool-list-item,
+.theme-aurora .provider-card,
+.theme-aurora .feature-card,
+.theme-aurora .auth-panel,
+.theme-aurora .dashboard-note,
+.theme-aurora .budget-panel {
+  background: #142522;
+  border-color: #234440;
+}
+
+.theme-aurora .bubble {
+  background: #172a28;
+}
+
+.theme-aurora .bubble.user {
+  background: #1b4a45;
+}
+
 .header {
   display: flex;
   flex-wrap: wrap;

@@ -15,6 +15,7 @@ const PROVIDERS = [
 export default function App() {
   const [auth, setAuth] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [theme, setTheme] = useState(() => localStorage.getItem('agentfluxa_theme') || 'midnight');
   const [tab, setTab] = useState('home');
   const [provider, setProvider] = useState('openai');
   const [model, setModel] = useState('');
@@ -37,10 +38,15 @@ export default function App() {
       .finally(() => setAuthLoading(false));
   }, []);
 
-  if (authLoading) return <div className="auth-loading">Loading AgentFLUXA...</div>;
-  if (!auth) return <Auth onAuthenticated={(user, token) => setAuth({ user, token })} />;
+  if (authLoading) return <div className={`auth-loading theme-${theme}`}>Loading AgentFLUXA...</div>;
+  if (!auth) return <div className={`theme-${theme}`}><Auth onAuthenticated={(user, token) => setAuth({ user, token })} /></div>;
 
   const authHeaders = { Authorization: `Bearer ${auth.token}` };
+
+  function changeTheme(nextTheme) {
+    setTheme(nextTheme);
+    localStorage.setItem('agentfluxa_theme', nextTheme);
+  }
 
   async function sendMessage(e) {
     e.preventDefault();
@@ -85,7 +91,7 @@ export default function App() {
   }
 
   return (
-    <div className="app">
+    <div className={`app theme-${theme}`}>
       <header className="header">
         <h1>AgentFLUXA</h1>
         <nav className="tabs">
@@ -108,6 +114,16 @@ export default function App() {
             API Dashboard
           </button>
         </nav>
+        <select
+          className="theme-select"
+          value={theme}
+          onChange={(e) => changeTheme(e.target.value)}
+          aria-label="Choose app theme"
+        >
+          <option value="midnight">Midnight</option>
+          <option value="light">Light</option>
+          <option value="aurora">Aurora</option>
+        </select>
         {tab === 'chat' && (
           <>
             <select value={provider} onChange={(e) => setProvider(e.target.value)}>

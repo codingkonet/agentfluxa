@@ -11,6 +11,7 @@ import settingsRouter from './routes/settings.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 5174;
+const HOST = process.env.HOST || '0.0.0.0';
 
 app.use(cors());
 app.use(express.json({ limit: '2mb' }));
@@ -32,6 +33,6 @@ if (existsSync(clientDist)) {
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`AgentFLUXA server listening on http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`AgentFLUXA server listening on ${HOST}:${PORT}`);
 });
