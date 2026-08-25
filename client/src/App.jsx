@@ -18,6 +18,7 @@ export default function App() {
   const [provider, setProvider] = useState('openai');
   const [model, setModel] = useState('');
   const [input, setInput] = useState('');
+  const [attachment, setAttachment] = useState(null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -43,11 +44,15 @@ export default function App() {
   async function sendMessage(e) {
     e.preventDefault();
     const text = input.trim();
-    if (!text || loading) return;
+    if ((!text && !attachment) || loading) return;
 
-    const nextMessages = [...messages, { role: 'user', content: text }];
+    const attachmentText = attachment
+      ? `\n\nAttached file: ${attachment.name}\n\n\`\`\`${attachment.language}\n${attachment.content}\n\`\`\``
+      : '';
+    const nextMessages = [...messages, { role: 'user', content: `${text}${attachmentText}`.trim() }];
     setMessages(nextMessages);
     setInput('');
+    setAttachment(null);
     setError('');
     setLoading(true);
 
@@ -65,6 +70,17 @@ export default function App() {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function chooseFile(e) {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      setError('Files must be smaller than 2 MB');
+      return;
+    }
+    setAttachment({ name: file.name, language: file.name.split('.').pop() || 'text', content: await file.text() });
   }
 
   return (
@@ -131,6 +147,10 @@ export default function App() {
           </main>
 
           <form className="composer" onSubmit={sendMessage}>
+            <label className="attach-button" title="Attach a text or code file">
+              +
+              <input type="file" onChange={chooseFile} accept=".txt,.md,.js,.jsx,.ts,.tsx,.json,.css,.html,.py,.java,.go,.rs,.sql" />
+            </label>
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -140,6 +160,14 @@ export default function App() {
               Send
             </button>
           </form>
+          {attachment && (
+            <div className="attachment-chip">
+              <span>Attached: {attachment.name}</span>
+              <button type="button" onClick={() => setAttachment(null)} aria-label="Remove attachment">
+                ×
+              </button>
+            </div>
+          )}
         </>
       )}
 

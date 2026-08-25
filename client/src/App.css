@@ -246,6 +246,40 @@ body {
   cursor: not-allowed;
 }
 
+.attach-button {
+  display: grid;
+  place-items: center;
+  flex: 0 0 38px;
+  height: 38px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #06b6d4;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.attach-button input {
+  display: none;
+}
+
+.attachment-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem 0.75rem;
+  color: #a0a4ad;
+  font-size: 0.8rem;
+}
+
+.attachment-chip button {
+  border: 0;
+  background: transparent;
+  color: #ff8f8f;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
 .footer {
   text-align: center;
   padding: 0.6rem;
@@ -560,6 +594,10 @@ body {
 
   .composer button {
     padding-inline: 0.85rem;
+  }
+
+  .attachment-chip {
+    padding-inline: 0.75rem;
   }
 
   .landing {
