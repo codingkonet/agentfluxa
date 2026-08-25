@@ -11,7 +11,8 @@ const PROVIDER_META = {
   copilot: { label: 'Copilot', fields: [], docs: null },
 };
 
-export default function ApiDashboard() {
+export default function ApiDashboard({ token }) {
+  const authHeaders = { Authorization: `Bearer ${token}` };
   const [settings, setSettings] = useState(null);
   const [drafts, setDrafts] = useState({});
   const [status, setStatus] = useState({});
@@ -19,7 +20,7 @@ export default function ApiDashboard() {
 
   async function refresh() {
     try {
-      const res = await fetch('/api/settings');
+      const res = await fetch('/api/settings', { headers: authHeaders });
       const data = await res.json();
       setSettings(data);
     } catch (err) {
@@ -43,7 +44,7 @@ export default function ApiDashboard() {
     try {
       const res = await fetch(`/api/settings/${provider}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders },
         body: JSON.stringify(drafts[provider] || {}),
       });
       const data = await res.json();
@@ -60,7 +61,10 @@ export default function ApiDashboard() {
   async function remove(provider) {
     setStatus((s) => ({ ...s, [provider]: 'saving' }));
     try {
-      const res = await fetch(`/api/settings/${provider}`, { method: 'DELETE' });
+      const res = await fetch(`/api/settings/${provider}`, {
+        method: 'DELETE',
+        headers: authHeaders,
+      });
       const data = await res.json();
       setSettings(data);
       setStatus((s) => ({ ...s, [provider]: 'removed' }));

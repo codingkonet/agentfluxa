@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ApiDashboard from './components/ApiDashboard.jsx';
+import Auth from './components/Auth.jsx';
 import Landing from './components/Landing.jsx';
 import CodeHelper from './components/CodeHelper.jsx';
 
@@ -11,6 +12,8 @@ const PROVIDERS = [
 ];
 
 export default function App() {
+  const [auth, setAuth] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [tab, setTab] = useState('home');
   const [provider, setProvider] = useState('openai');
   const [model, setModel] = useState('');
@@ -18,6 +21,24 @@ export default function App() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const token = localStorage.getItem('agentfluxa_token');
+    if (!token) {
+      setAuthLoading(false);
+      return;
+    }
+    fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error('Session expired'))))
+      .then(({ user }) => setAuth({ user, token }))
+      .catch(() => localStorage.removeItem('agentfluxa_token'))
+      .finally(() => setAuthLoading(false));
+  }, []);
+
+  if (authLoading) return <div className="auth-loading">Loading AgentFLUXA...</div>;
+  if (!auth) return <Auth onAuthenticated={(user, token) => setAuth({ user, token })} />;
+
+  const authHeaders = { Authorization: `Bearer ${auth.token}` };
 
   async function sendMessage(e) {
     e.preventDefault();
@@ -33,7 +54,7 @@ export default function App() {
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders },
         body: JSON.stringify({ provider, messages: nextMessages, model: model || undefined }),
       });
       const data = await res.json();
@@ -93,9 +114,9 @@ export default function App() {
           onOpenCoder={() => setTab('coder')}
         />
       ) : tab === 'dashboard' ? (
-        <ApiDashboard />
+        <ApiDashboard token={auth.token} />
       ) : tab === 'coder' ? (
-        <CodeHelper />
+        <CodeHelper token={auth.token} />
       ) : (
         <>
           <main className="chat">

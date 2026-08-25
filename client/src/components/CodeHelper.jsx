@@ -69,7 +69,8 @@ function Message({ role, content }) {
   );
 }
 
-export default function CodeHelper() {
+export default function CodeHelper({ token }) {
+  const authHeaders = { Authorization: `Bearer ${token}` };
   const [provider, setProvider] = useState('openai');
   const [model, setModel] = useState('');
   const [input, setInput] = useState('');
@@ -91,7 +92,7 @@ export default function CodeHelper() {
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders },
         body: JSON.stringify({
           provider,
           messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...nextMessages],
