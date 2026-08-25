@@ -29,6 +29,16 @@ body {
   margin-left: auto;
 }
 
+.model-input {
+  width: 160px;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #1a1d24;
+  color: #e6e6e6;
+  font-size: 0.85rem;
+}
+
 .tabs {
   display: flex;
   gap: 0.4rem;

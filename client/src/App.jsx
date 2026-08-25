@@ -13,6 +13,7 @@ const PROVIDERS = [
 export default function App() {
   const [tab, setTab] = useState('home');
   const [provider, setProvider] = useState('openai');
+  const [model, setModel] = useState('');
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ export default function App() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ provider, messages: nextMessages }),
+        body: JSON.stringify({ provider, messages: nextMessages, model: model || undefined }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Request failed');
@@ -67,13 +68,21 @@ export default function App() {
           </button>
         </nav>
         {tab === 'chat' && (
-          <select value={provider} onChange={(e) => setProvider(e.target.value)}>
-            {PROVIDERS.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.label}
-              </option>
-            ))}
-          </select>
+          <>
+            <select value={provider} onChange={(e) => setProvider(e.target.value)}>
+              {PROVIDERS.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+            <input
+              className="model-input"
+              value={model}
+              onChange={(e) => setModel(e.target.value)}
+              placeholder="model (optional)"
+            />
+          </>
         )}
       </header>
 

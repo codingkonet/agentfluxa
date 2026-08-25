@@ -71,6 +71,7 @@ function Message({ role, content }) {
 
 export default function CodeHelper() {
   const [provider, setProvider] = useState('openai');
+  const [model, setModel] = useState('');
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -94,6 +95,7 @@ export default function CodeHelper() {
         body: JSON.stringify({
           provider,
           messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...nextMessages],
+          model: model || undefined,
         }),
       });
       const data = await res.json();
@@ -117,6 +119,12 @@ export default function CodeHelper() {
             </option>
           ))}
         </select>
+        <input
+          className="model-input"
+          value={model}
+          onChange={(e) => setModel(e.target.value)}
+          placeholder="model (optional)"
+        />
       </div>
 
       <main className="chat">
