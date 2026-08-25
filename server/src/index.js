@@ -1,9 +1,13 @@
 import 'dotenv/config';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { existsSync } from 'fs';
 import express from 'express';
 import cors from 'cors';
 import chatRouter from './routes/chat.js';
 import settingsRouter from './routes/settings.js';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 5174;
 
@@ -16,6 +20,15 @@ app.get('/api/health', (_req, res) => {
 
 app.use('/api/chat', chatRouter);
 app.use('/api/settings', settingsRouter);
+
+// Serve the built client (if present) so this single service can be deployed as-is.
+const clientDist = path.join(__dirname, '..', '..', 'client', 'dist');
+if (existsSync(clientDist)) {
+  app.use(express.static(clientDist));
+  app.get(/^(?!\/api).*/, (_req, res) => {
+    res.sendFile(path.join(clientDist, 'index.html'));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`AgentFLUXA server listening on http://localhost:${PORT}`);
