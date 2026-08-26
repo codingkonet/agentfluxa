@@ -73,6 +73,13 @@ Embeds the AgentFLUXA web app in a VS Code webview panel.
 
 `DELETE /api/settings/:provider` — clears a provider's stored config.
 
+`POST /api/tools/read` — reads a text file inside `AGENTFLUXA_WORKSPACE` (maximum 2 MB).
+
+`POST /api/tools/fetch` — fetches an HTTP or HTTPS URL (maximum 2 MB response).
+
+Tool access requires authentication and is restricted to these explicit operations. The model
+does not receive unrestricted filesystem or network access.
+
 `POST /api/chat`
 
 
@@ -88,3 +95,6 @@ Response:
 ```json
 { "provider": "openai", "reply": "Hi there!" }
 ```
+
+In the terminal, use `/read path/to/file` or `/fetch https://example.com` to add local or web
+content to the next model request.

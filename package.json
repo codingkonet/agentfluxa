@@ -15,7 +15,8 @@
     "build": "npm run build --workspace client",
     "build:client": "npm run build --workspace client",
     "start": "npm run start --workspace server",
-    "chat": "node cli/src/index.js"
+    "chat": "node cli/src/index.js",
+    "test": "node --test cli/test/*.test.js"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

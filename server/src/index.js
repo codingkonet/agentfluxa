@@ -7,6 +7,7 @@ import cors from 'cors';
 import authRouter, { requireAuth } from './routes/auth.js';
 import chatRouter from './routes/chat.js';
 import settingsRouter from './routes/settings.js';
+import toolsRouter from './routes/tools.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -23,6 +24,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/chat', requireAuth, chatRouter);
 app.use('/api/settings', requireAuth, settingsRouter);
+app.use('/api/tools', requireAuth, toolsRouter);
 
 // Serve the built client (if present) so this single service can be deployed as-is.
 const clientDist = path.join(__dirname, '..', '..', 'client', 'dist');
