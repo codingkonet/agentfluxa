@@ -410,6 +410,23 @@ body {
   cursor: text;
 }
 
+.terminal-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #1e2128;
+  cursor: default;
+}
+
+.terminal-toolbar select {
+  background: #1a1d24;
+  color: #e6e6e6;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  font: inherit;
+}
+
 .terminal-screen {
   flex: 1;
   overflow-y: auto;

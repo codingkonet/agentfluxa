@@ -178,8 +178,30 @@ export default function Terminal({ token }) {
     }
   }
 
+  function changeProvider(next) {
+    setProvider(next);
+    print(`Provider set to ${next}`, 'system');
+    inputRef.current?.focus();
+  }
+
   return (
     <main className="terminal" onClick={() => inputRef.current?.focus()}>
+      <div className="terminal-toolbar" onClick={(e) => e.stopPropagation()}>
+        <select value={provider} onChange={(e) => changeProvider(e.target.value)} aria-label="Provider">
+          {VALID_PROVIDERS.map((p) => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
+        </select>
+        <input
+          className="model-input"
+          value={model}
+          onChange={(e) => setModel(e.target.value)}
+          placeholder="model (optional)"
+          aria-label="Model override"
+        />
+      </div>
       <div className="terminal-screen" ref={scrollRef}>
         {lines.map((line, i) => (
           <Line key={i} line={line} />
