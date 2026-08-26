@@ -4,6 +4,7 @@ import Auth from './components/Auth.jsx';
 import Landing from './components/Landing.jsx';
 import CodeHelper from './components/CodeHelper.jsx';
 import Tools from './components/Tools.jsx';
+import Terminal from './components/Terminal.jsx';
 
 const PROVIDERS = [
   { id: 'openai', label: 'OpenAI' },
@@ -101,6 +102,9 @@ export default function App() {
           <button className={tab === 'chat' ? 'active' : ''} onClick={() => setTab('chat')}>
             Chat
           </button>
+          <button className={tab === 'terminal' ? 'active' : ''} onClick={() => setTab('terminal')}>
+            Terminal
+          </button>
           <button className={tab === 'coder' ? 'active' : ''} onClick={() => setTab('coder')}>
             Coder
           </button>
@@ -151,6 +155,8 @@ export default function App() {
         />
       ) : tab === 'dashboard' ? (
         <ApiDashboard token={auth.token} />
+      ) : tab === 'terminal' ? (
+        <Terminal token={auth.token} />
       ) : tab === 'coder' ? (
         <CodeHelper token={auth.token} />
       ) : tab === 'tools' ? (
