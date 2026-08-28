@@ -63,7 +63,7 @@ Embeds the AgentFLUXA web app in a VS Code webview panel.
 | `openai`     | Uses OpenAI Chat Completions API. Requires `OPENAI_API_KEY`. |
 | `gemini`     | Uses Google Generative Language API. Requires `GEMINI_API_KEY`. |
 | `openrouter` | Uses OpenRouter's OpenAI-compatible API. Requires `OPENROUTER_API_KEY`; model configurable via `OPENROUTER_MODEL`. |
-| `copilot`    | **Stub only.** GitHub Copilot has no public chat-completions API. To get real Copilot responses, port `server/src/providers/copilot.js` into a VS Code extension and call `vscode.lm.selectChatModels()` there instead. |
+| `copilot`    | Real responses when opened via the **VS Code extension** while signed in to GitHub Copilot (uses `vscode.lm.selectChatModels`, bridged to the web app over `postMessage`). Falls back to a stub message when used as a plain website. |
 
 ## API
 

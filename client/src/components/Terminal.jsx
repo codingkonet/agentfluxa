@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { isEmbeddedInExtensionHost, requestCopilotReply } from '../lib/copilotBridge.js';
 
 const VALID_PROVIDERS = ['openai', 'gemini', 'openrouter', 'copilot'];
 
@@ -125,15 +126,21 @@ export default function Terminal({ token }) {
     setMessages(nextMessages);
     setBusy(true);
     try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
-        body: JSON.stringify({ provider, messages: nextMessages, model: model || undefined }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Request failed');
-      setMessages([...nextMessages, { role: 'assistant', content: data.reply }]);
-      print(data.reply, 'assistant');
+      let reply;
+      if (provider === 'copilot' && isEmbeddedInExtensionHost()) {
+        reply = await requestCopilotReply(nextMessages, model || undefined);
+      } else {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+          body: JSON.stringify({ provider, messages: nextMessages, model: model || undefined }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Request failed');
+        reply = data.reply;
+      }
+      setMessages([...nextMessages, { role: 'assistant', content: reply }]);
+      print(reply, 'assistant');
     } catch (err) {
       print(err.message, 'error');
     } finally {
