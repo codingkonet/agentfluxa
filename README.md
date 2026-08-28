@@ -63,6 +63,8 @@ Embeds the AgentFLUXA web app in a VS Code webview panel.
 | `openai`     | Uses OpenAI Chat Completions API. Requires `OPENAI_API_KEY`. |
 | `gemini`     | Uses Google Generative Language API. Requires `GEMINI_API_KEY`. |
 | `openrouter` | Uses OpenRouter's OpenAI-compatible API. Requires `OPENROUTER_API_KEY`; model configurable via `OPENROUTER_MODEL`. |
+| `huggingface` | **Free tier.** Uses Hugging Face's Inference Providers router (OpenAI-compatible, hundreds of open models). Requires a free token from [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) via `HUGGINGFACE_API_KEY`; model configurable via `HUGGINGFACE_MODEL`. |
+| `ollama`     | **Free, fully local.** Talks to a locally running [Ollama](https://ollama.com) instance — no API key, no cost, no data leaves your machine. Requires Ollama installed and a model pulled (e.g. `ollama pull llama3.2`). Configurable via `OLLAMA_BASE_URL` / `OLLAMA_MODEL`. |
 | `copilot`    | Real responses when opened via the **VS Code extension** while signed in to GitHub Copilot (uses `vscode.lm.selectChatModels`, bridged to the web app over `postMessage`). Falls back to a stub message when used as a plain website. |
 
 ## API

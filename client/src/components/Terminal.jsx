@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { isEmbeddedInExtensionHost, requestCopilotReply } from '../lib/copilotBridge.js';
 
-const VALID_PROVIDERS = ['openai', 'gemini', 'openrouter', 'copilot'];
+const VALID_PROVIDERS = ['openai', 'gemini', 'openrouter', 'copilot', 'huggingface', 'ollama'];
 
 const HELP_TEXT = `Commands:
-  /provider <name>   Switch provider (openai, gemini, openrouter, copilot)
+  /provider <name>   Switch provider (openai, gemini, openrouter, copilot, huggingface, ollama)
   /model <name>      Set a model override (no argument clears it)
   /read <path>       Read a text file from the AgentFLUXA workspace
   /fetch <url>       Fetch a web page and add it to the conversation

@@ -12,6 +12,8 @@ const PROVIDERS = [
   { id: 'gemini', label: 'Gemini' },
   { id: 'copilot', label: 'Copilot' },
   { id: 'openrouter', label: 'OpenRouter' },
+  { id: 'huggingface', label: 'Hugging Face (free)' },
+  { id: 'ollama', label: 'Ollama (local, free)' },
 ];
 
 export default function App() {

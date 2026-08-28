@@ -8,6 +8,16 @@ const PROVIDER_META = {
     fields: ['apiKey', 'model'],
     docs: 'https://openrouter.ai/keys',
   },
+  huggingface: {
+    label: 'Hugging Face (free)',
+    fields: ['apiKey', 'model'],
+    docs: 'https://huggingface.co/settings/tokens',
+  },
+  ollama: {
+    label: 'Ollama (local, free)',
+    fields: ['baseUrl', 'model'],
+    docs: 'https://ollama.com',
+  },
   copilot: { label: 'Copilot', fields: [], docs: null },
 };
 
@@ -108,6 +118,17 @@ export default function ApiDashboard({ token }) {
                       placeholder="Paste API key…"
                       value={draft.apiKey || ''}
                       onChange={(e) => updateDraft(id, 'apiKey', e.target.value)}
+                    />
+                  </label>
+                )}
+                {meta.fields.includes('baseUrl') && (
+                  <label className="field">
+                    <span>Base URL (optional, e.g. {entry.baseUrl || 'http://localhost:11434'})</span>
+                    <input
+                      type="text"
+                      placeholder={entry.baseUrl || 'http://localhost:11434'}
+                      value={draft.baseUrl || ''}
+                      onChange={(e) => updateDraft(id, 'baseUrl', e.target.value)}
                     />
                   </label>
                 )}

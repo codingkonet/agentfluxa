@@ -11,6 +11,8 @@ const PROVIDER_FIELDS = {
   gemini: ['apiKey'],
   openrouter: ['apiKey', 'model'],
   copilot: [],
+  huggingface: ['apiKey', 'model'],
+  ollama: ['baseUrl', 'model'],
 };
 
 let cache = null;
@@ -42,9 +44,10 @@ export async function getPublicSettings() {
   for (const provider of Object.keys(PROVIDER_FIELDS)) {
     const entry = settings[provider] || {};
     result[provider] = {
-      configured: Boolean(entry.apiKey),
+      configured: Boolean(entry.apiKey) || Boolean(entry.baseUrl),
       apiKeyMasked: mask(entry.apiKey),
       model: entry.model || null,
+      baseUrl: entry.baseUrl || null,
     };
   }
   return result;

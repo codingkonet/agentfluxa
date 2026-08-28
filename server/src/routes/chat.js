@@ -3,8 +3,10 @@ import * as openai from '../providers/openai.js';
 import * as gemini from '../providers/gemini.js';
 import * as openrouter from '../providers/openrouter.js';
 import * as copilot from '../providers/copilot.js';
+import * as huggingface from '../providers/huggingface.js';
+import * as ollama from '../providers/ollama.js';
 
-const providers = { openai, gemini, openrouter, copilot };
+const providers = { openai, gemini, openrouter, copilot, huggingface, ollama };
 const router = Router();
 
 router.post('/', async (req, res) => {
