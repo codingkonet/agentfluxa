@@ -124,7 +124,7 @@ export default function App() {
             className={tab === 'dashboard' ? 'active' : ''}
             onClick={() => setTab('dashboard')}
           >
-            API Dashboard
+            Admin Panel
           </button>
         </nav>
         <select

@@ -33,6 +33,7 @@ export default function ApiDashboard({ token }) {
       const res = await fetch('/api/settings', { headers: authHeaders });
       const data = await res.json();
       setSettings(data);
+      setError('');
     } catch (err) {
       setError(err.message);
     }
@@ -84,10 +85,55 @@ export default function ApiDashboard({ token }) {
     }
   }
 
+  async function clearAll() {
+    setStatus((s) => ({ ...s, all: 'clearing' }));
+    try {
+      await Promise.all(
+        Object.keys(PROVIDER_META).map((provider) =>
+          fetch(`/api/settings/${provider}`, {
+            method: 'DELETE',
+            headers: authHeaders,
+          }),
+        ),
+      );
+      await refresh();
+      setStatus((s) => ({ ...s, all: 'cleared' }));
+    } catch (err) {
+      setStatus((s) => ({ ...s, all: 'error' }));
+      setError(err.message);
+    }
+  }
+
   if (!settings) return <div className="dashboard">Loading…</div>;
+
+  const configuredCount = Object.values(settings).filter((entry) => entry.configured).length;
 
   return (
     <div className="dashboard">
+      <div className="admin-shell">
+        <div className="admin-header">
+          <div>
+            <p className="eyebrow">Admin panel</p>
+            <h2>Provider and model controls</h2>
+          </div>
+          <div className="admin-metrics">
+            <span className="metric-pill">
+              {configuredCount}/{Object.keys(PROVIDER_META).length} connected
+            </span>
+            <button className="secondary" onClick={refresh}>
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        <div className="admin-toolbar">
+          <button onClick={refresh}>Sync settings</button>
+          <button className="secondary" onClick={clearAll}>
+            Clear all keys
+          </button>
+        </div>
+      </div>
+
       <p className="dashboard-note">
         Keys are stored locally on this machine in <code>server/data/settings.json</code> (plaintext).
         Only run this dashboard on a trusted, local machine — never expose it over the network.

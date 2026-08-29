@@ -1,61 +1,57 @@
-const FEATURES = [
+const CAPABILITIES = [
   {
-    id: 'openai',
-    title: 'OpenAI',
-    blurb: 'Chat with GPT models using your own API key.',
+    number: '01',
+    title: 'Choose your model',
+    blurb: 'Work with OpenAI, Gemini, OpenRouter, and local model routes from one focused workspace.',
   },
   {
-    id: 'gemini',
-    title: 'Gemini',
-    blurb: "Talk to Google's Gemini models side by side with the rest.",
+    number: '02',
+    title: 'Keep work in context',
+    blurb: 'Attach code and text files, then carry the conversation from research through implementation.',
   },
   {
-    id: 'openrouter',
-    title: 'OpenRouter',
-    blurb: 'Route to dozens of models through one OpenAI-compatible API.',
-  },
-  {
-    id: 'copilot',
-    title: 'Copilot',
-    blurb: 'Placeholder slot, ready to wire into the VS Code Language Model API.',
-  },
-  {
-    id: 'coder',
-    title: 'Coder',
-    blurb: 'A coding-focused assistant with fenced code blocks and one-click copy.',
+    number: '03',
+    title: 'Act from your workspace',
+    blurb: 'Use the terminal client to bring approved local files and web content into the model conversation.',
   },
 ];
 
 export default function Landing({ onStartChat, onOpenDashboard, onOpenCoder }) {
   return (
-    <div className="landing">
-      <section className="hero">
-        <h2>One chat window. Every model.</h2>
-        <p>
-          AgentFLUXA connects OpenAI, Gemini, OpenRouter, and Copilot behind a single interface —
-          add your API keys once, then switch providers per message.
+    <main className="landing">
+      <section className="landing-hero">
+        <p className="landing-eyebrow">Agent workspace</p>
+        <h2>AgentFLUXA</h2>
+        <p className="landing-lede">
+          A single place to talk with AI models, work through code, and bring trusted files and web
+          research into the conversation.
         </p>
         <div className="hero-actions">
-          <button className="cta primary" onClick={onStartChat}>
-            Start chatting
-          </button>
-          <button className="cta secondary" onClick={onOpenCoder}>
-            Open coding assistant
-          </button>
-          <button className="cta secondary" onClick={onOpenDashboard}>
-            Manage API keys
-          </button>
+          <button className="cta primary" onClick={onStartChat}>Open chat</button>
+          <button className="cta secondary" onClick={onOpenCoder}>Coding assistant</button>
+        </div>
+        <div className="landing-signal" aria-label="Available AI providers">
+          <span>OpenAI</span><span>Gemini</span><span>OpenRouter</span><span>Copilot</span>
         </div>
       </section>
 
-      <section className="feature-grid">
-        {FEATURES.map((f) => (
-          <div key={f.id} className="feature-card">
-            <h3>{f.title}</h3>
-            <p>{f.blurb}</p>
-          </div>
+      <section className="landing-overview" aria-label="AgentFLUXA services">
+        <p>Built for focused AI work</p>
+        <strong>Chat, code, research, and configuration without changing tools.</strong>
+        <button className="landing-text-link" onClick={onOpenDashboard}>Configure providers</button>
+      </section>
+
+      <section className="landing-capabilities">
+        {CAPABILITIES.map((capability) => (
+          <article key={capability.number} className="landing-capability">
+            <span>{capability.number}</span>
+            <h3>{capability.title}</h3>
+            <p>{capability.blurb}</p>
+          </article>
         ))}
       </section>
-    </div>
+
+      <p className="landing-copyright">Copyright {new Date().getFullYear()} AgentFLUXA. All rights reserved.</p>
+    </main>
   );
 }
