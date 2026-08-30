@@ -19,6 +19,7 @@ const PROVIDERS = [
 export default function App() {
   const [auth, setAuth] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [showAuth, setShowAuth] = useState(false);
   const [theme, setTheme] = useState(() => localStorage.getItem('agentfluxa_theme') || 'midnight');
   const [tab, setTab] = useState('home');
   const [provider, setProvider] = useState('openai');
@@ -43,7 +44,21 @@ export default function App() {
   }, []);
 
   if (authLoading) return <div className={`auth-loading theme-${theme}`}>Loading AgentFLUXA...</div>;
-  if (!auth) return <div className={`theme-${theme}`}><Auth onAuthenticated={(user, token) => setAuth({ user, token })} /></div>;
+  if (!auth) {
+    return showAuth ? (
+      <div className={`theme-${theme}`}>
+        <Auth onAuthenticated={(user, token) => setAuth({ user, token })} />
+      </div>
+    ) : (
+      <div className={`theme-${theme}`}>
+        <Landing
+          onStartChat={() => setShowAuth(true)}
+          onOpenDashboard={() => setShowAuth(true)}
+          onOpenCoder={() => setShowAuth(true)}
+        />
+      </div>
+    );
+  }
 
   const authHeaders = { Authorization: `Bearer ${auth.token}` };
 
