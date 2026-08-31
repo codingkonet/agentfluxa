@@ -29,9 +29,7 @@ const steps = [
 ];
 
 const plans = [
-  { name: 'Starter', price: '$0', detail: 'For exploration and personal workflows', featured: false },
-  { name: 'Builder', price: '$29', detail: 'Best for daily work and prototypes', featured: true },
-  { name: 'Scale', price: 'Custom', detail: 'For teams, governance, and automation', featured: false },
+  { name: 'Free', price: '$0', detail: 'For exploration and personal workflows', featured: false },
 ];
 
 export default function Landing({ onStartChat, onOpenDashboard, onOpenCoder }) {
@@ -50,7 +48,7 @@ export default function Landing({ onStartChat, onOpenDashboard, onOpenCoder }) {
         <header className="topbar">
           <div className="brand-lockup">
             <span className="brand-dot" />
-            <span className="brand-name">NexaFlow</span>
+            <span className="brand-name">AgentFLUXA</span>
           </div>
 
           <nav className="topnav" aria-label="Main navigation">
@@ -69,7 +67,7 @@ export default function Landing({ onStartChat, onOpenDashboard, onOpenCoder }) {
             <span className="badge">AI operations for real teams</span>
             <h1>Turn scattered work into a guided execution engine.</h1>
             <p>
-              NexaFlow helps your team research, write, review, and automate work from a single
+              AgentFLUXA helps your team research, write, review, and automate work from a single
               calm interface. It keeps context, tools, and actions connected without the usual
               chaos.
             </p>
@@ -140,7 +138,7 @@ export default function Landing({ onStartChat, onOpenDashboard, onOpenCoder }) {
 
       <section className="feature-strip" id="features">
         <div className="feature-intro">
-          <span>Why teams choose NexaFlow</span>
+          <span>Why teams choose AgentFLUXA</span>
           <h2>One interface for planning, research, and execution.</h2>
         </div>
 
@@ -198,7 +196,7 @@ export default function Landing({ onStartChat, onOpenDashboard, onOpenCoder }) {
       </section>
 
       <footer className="landing-footer">
-        <p>© {new Date().getFullYear()} NexaFlow. Built for autonomous work.</p>
+        <p>© {new Date().getFullYear()} AgentFLUXA. Built for autonomous work.</p>
       </footer>
     </main>
   );
