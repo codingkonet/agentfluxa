@@ -5,6 +5,7 @@ import Landing from './components/Landing.jsx';
 import CodeHelper from './components/CodeHelper.jsx';
 import Tools from './components/Tools.jsx';
 import Terminal from './components/Terminal.jsx';
+import BillingAdmin from './components/BillingAdmin.jsx';
 import { isEmbeddedInExtensionHost, requestCopilotReply } from './lib/copilotBridge.js';
 
 const PROVIDERS = [
@@ -178,7 +179,7 @@ export default function App() {
           onOpenCoder={() => setTab('coder')}
         />
       ) : tab === 'dashboard' ? (
-        <ApiDashboard token={auth.token} />
+        <BillingAdmin token={auth.token} userEmail={auth.user.email} />
       ) : tab === 'terminal' ? (
         <Terminal token={auth.token} />
       ) : tab === 'coder' ? (

@@ -1,4 +1,8 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+
+const fallbackPlans = [
+  { name: 'Free', price: '$0', detail: 'For exploration and personal workflows', featured: false },
+];
 
 const highlights = [
   { value: '24/7', label: 'Autonomous task flow' },
@@ -28,11 +32,33 @@ const steps = [
   { id: '03', title: 'Let it execute', text: 'Receive updates, artifacts, and recommendations as the workflow completes.' },
 ];
 
-const plans = [
-  { name: 'Free', price: '$0', detail: 'For exploration and personal workflows', featured: false },
-];
-
 export default function Landing({ onStartChat, onOpenDashboard, onOpenCoder }) {
+  const [plans, setPlans] = useState(fallbackPlans);
+
+  useEffect(() => {
+    let active = true;
+    fetch('/api/billing/public')
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error('Unable to load pricing'))))
+      .then((data) => {
+        if (!active) return;
+        const options = Object.entries(data.plans || {})
+          .filter(([, plan]) => plan && plan.enabled !== false)
+          .map(([id, plan]) => ({
+            name: plan.name,
+            price: plan.price,
+            detail: plan.detail,
+            featured: id === 'paid' && plan.enabled,
+          }));
+        setPlans(options.length ? options : fallbackPlans);
+      })
+      .catch(() => {
+        if (active) setPlans(fallbackPlans);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const stats = useMemo(
     () => ({
       review: '11k+',
