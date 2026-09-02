@@ -136,12 +136,17 @@ export default function App() {
           <button className={tab === 'tools' ? 'active' : ''} onClick={() => setTab('tools')}>
             Tools
           </button>
-          <button
-            className={tab === 'dashboard' ? 'active' : ''}
-            onClick={() => setTab('dashboard')}
-          >
-            Admin Panel
+          <button className={tab === 'settings' ? 'active' : ''} onClick={() => setTab('settings')}>
+            My APIs
           </button>
+          {auth.user.email.toLowerCase() === 'dev@agentfluxa.com' && (
+            <button
+              className={tab === 'dashboard' ? 'active' : ''}
+              onClick={() => setTab('dashboard')}
+            >
+              Admin Panel
+            </button>
+          )}
         </nav>
         <select
           className="theme-select"
@@ -180,6 +185,8 @@ export default function App() {
         />
       ) : tab === 'dashboard' ? (
         <BillingAdmin token={auth.token} userEmail={auth.user.email} />
+      ) : tab === 'settings' ? (
+        <ApiDashboard token={auth.token} />
       ) : tab === 'terminal' ? (
         <Terminal token={auth.token} />
       ) : tab === 'coder' ? (
@@ -224,9 +231,11 @@ export default function App() {
         </>
       )}
 
-      <footer className="footer">
-        © {new Date().getFullYear()} AgentFLUXA. All rights reserved.
-      </footer>
+      {tab !== 'home' && (
+        <footer className="footer">
+          © {new Date().getFullYear()} AgentFLUXA. All rights reserved.
+        </footer>
+      )}
     </div>
   );
 }

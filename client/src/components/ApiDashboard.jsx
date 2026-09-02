@@ -113,8 +113,8 @@ export default function ApiDashboard({ token }) {
       <div className="admin-shell">
         <div className="admin-header">
           <div>
-            <p className="eyebrow">Admin panel</p>
-            <h2>Provider and model controls</h2>
+            <p className="eyebrow">Your workspace</p>
+            <h2>API keys and model preferences</h2>
           </div>
           <div className="admin-metrics">
             <span className="metric-pill">
@@ -135,8 +135,8 @@ export default function ApiDashboard({ token }) {
       </div>
 
       <p className="dashboard-note">
-        Keys are stored locally on this machine in <code>server/data/settings.json</code> (plaintext).
-        Only run this dashboard on a trusted, local machine — never expose it over the network.
+        Your API keys and model preferences are saved separately from other user accounts.
+        Keep this workspace private and use only keys you control.
       </p>
       {error && <div className="bubble error">{error}</div>}
 

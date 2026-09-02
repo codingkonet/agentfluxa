@@ -1,12 +1,10 @@
-import { getProviderConfig } from '../store/settings.js';
-
 const DEFAULT_BASE_URL = 'http://localhost:11434';
 const DEFAULT_MODEL = 'llama3.2';
 
 // Ollama runs open models fully locally — no API key, no cost, no network
 // calls beyond localhost. Install from https://ollama.com and `ollama pull <model>`.
-export async function sendMessage(messages, { model } = {}) {
-  const stored = await getProviderConfig('ollama');
+export async function sendMessage(messages, { model, providerConfig = {} } = {}) {
+  const stored = providerConfig;
   const baseUrl = (stored.baseUrl || process.env.OLLAMA_BASE_URL || DEFAULT_BASE_URL).replace(/\/$/, '');
   const chosenModel = model || stored.model || process.env.OLLAMA_MODEL || DEFAULT_MODEL;
 

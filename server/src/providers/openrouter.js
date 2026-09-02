@@ -1,9 +1,7 @@
-import { getProviderConfig } from '../store/settings.js';
-
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
-export async function sendMessage(messages, { model } = {}) {
-  const stored = await getProviderConfig('openrouter');
+export async function sendMessage(messages, { model, providerConfig = {} } = {}) {
+  const stored = providerConfig;
   const apiKey = stored.apiKey || process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
     throw new Error('OpenRouter API key is not set. Add it from the API dashboard or OPENROUTER_API_KEY env var.');

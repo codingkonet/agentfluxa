@@ -23,8 +23,9 @@ async function load() {
     const raw = await fs.readFile(SETTINGS_FILE, 'utf-8');
     cache = JSON.parse(raw);
   } catch {
-    cache = {};
+    cache = { users: {} };
   }
+  if (!cache.users) cache = { users: {} };
   return cache;
 }
 
@@ -38,8 +39,8 @@ function mask(value) {
   return value.length <= 4 ? '••••' : `${'•'.repeat(value.length - 4)}${value.slice(-4)}`;
 }
 
-export async function getPublicSettings() {
-  const settings = await load();
+export async function getPublicSettings(userId) {
+  const settings = (await load()).users[userId] || {};
   const result = {};
   for (const provider of Object.keys(PROVIDER_FIELDS)) {
     const entry = settings[provider] || {};
@@ -53,16 +54,17 @@ export async function getPublicSettings() {
   return result;
 }
 
-export async function getProviderConfig(provider) {
-  const settings = await load();
+export async function getProviderConfig(userId, provider) {
+  const settings = (await load()).users[userId] || {};
   return settings[provider] || {};
 }
 
-export async function saveProviderConfig(provider, fields) {
+export async function saveProviderConfig(userId, provider, fields) {
   if (!(provider in PROVIDER_FIELDS)) {
     throw new Error(`Unknown provider "${provider}"`);
   }
-  const settings = await load();
+  const data = await load();
+  const settings = data.users[userId] || {};
   const allowed = PROVIDER_FIELDS[provider];
   const current = settings[provider] || {};
   const next = { ...current };
@@ -72,15 +74,18 @@ export async function saveProviderConfig(provider, fields) {
     }
   }
   settings[provider] = next;
-  cache = settings;
+  data.users[userId] = settings;
+  cache = data;
   await persist();
-  return getPublicSettings();
+  return getPublicSettings(userId);
 }
 
-export async function clearProviderConfig(provider) {
-  const settings = await load();
+export async function clearProviderConfig(userId, provider) {
+  const data = await load();
+  const settings = data.users[userId] || {};
   delete settings[provider];
-  cache = settings;
+  data.users[userId] = settings;
+  cache = data;
   await persist();
-  return getPublicSettings();
+  return getPublicSettings(userId);
 }

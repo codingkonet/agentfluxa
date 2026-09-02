@@ -1,12 +1,10 @@
-import { getProviderConfig } from '../store/settings.js';
-
 const HF_ROUTER_URL = 'https://router.huggingface.co/v1/chat/completions';
 const DEFAULT_MODEL = 'deepseek-ai/DeepSeek-V3-0324:fastest';
 
 // Hugging Face's Inference Providers router — a free-tier, OpenAI-compatible
 // gateway to many open-weight models (DeepSeek, Llama, Qwen, etc.).
-export async function sendMessage(messages, { model } = {}) {
-  const stored = await getProviderConfig('huggingface');
+export async function sendMessage(messages, { model, providerConfig = {} } = {}) {
+  const stored = providerConfig;
   const apiKey = stored.apiKey || process.env.HUGGINGFACE_API_KEY;
   if (!apiKey) {
     throw new Error(

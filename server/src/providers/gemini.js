@@ -1,10 +1,8 @@
-import { getProviderConfig } from '../store/settings.js';
-
 const GEMINI_URL = (model, apiKey) =>
   `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-export async function sendMessage(messages, { model = 'gemini-1.5-flash' } = {}) {
-  const stored = await getProviderConfig('gemini');
+export async function sendMessage(messages, { model = 'gemini-1.5-flash', providerConfig = {} } = {}) {
+  const stored = providerConfig;
   const apiKey = stored.apiKey || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('Gemini API key is not set. Add it from the API dashboard or GEMINI_API_KEY env var.');

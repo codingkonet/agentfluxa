@@ -9,7 +9,7 @@ const VALID_PROVIDERS = ['openai', 'gemini', 'openrouter', 'copilot', 'huggingfa
 const router = Router();
 
 router.get('/', async (_req, res) => {
-  res.json(await getPublicSettings());
+  res.json(await getPublicSettings(_req.user.id));
 });
 
 router.put('/:provider', async (req, res) => {
@@ -18,7 +18,7 @@ router.put('/:provider', async (req, res) => {
     return res.status(400).json({ error: `Unknown provider "${provider}"` });
   }
   try {
-    const settings = await saveProviderConfig(provider, req.body ?? {});
+    const settings = await saveProviderConfig(req.user.id, provider, req.body ?? {});
     res.json(settings);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -30,7 +30,7 @@ router.delete('/:provider', async (req, res) => {
   if (!VALID_PROVIDERS.includes(provider)) {
     return res.status(400).json({ error: `Unknown provider "${provider}"` });
   }
-  res.json(await clearProviderConfig(provider));
+  res.json(await clearProviderConfig(req.user.id, provider));
 });
 
 export default router;

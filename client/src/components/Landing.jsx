@@ -221,9 +221,6 @@ export default function Landing({ onStartChat, onOpenDashboard, onOpenCoder }) {
         </div>
       </section>
 
-      <footer className="landing-footer">
-        <p>© {new Date().getFullYear()} AgentFLUXA. Built for autonomous work.</p>
-      </footer>
     </main>
   );
 }
